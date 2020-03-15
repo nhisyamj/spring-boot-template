@@ -3,6 +3,7 @@ package com.nhisyamj.springboottemplate.service;
 import com.nhisyamj.springboottemplate.dao.EmployeeDaoImpl;
 import com.nhisyamj.springboottemplate.vm.EmployeeVM;
 import com.nhisyamj.springboottemplate.vo.EmployeeVO;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -32,14 +33,14 @@ public class EmployeeServiceTest {
 
     @Test
     public void addEmpSuccessTest() {
-        EmployeeVM vm = createEmployee();
+        EmployeeVM vm = createEmployeeVM();
         service.addEmp(vm);
         verify(empDao,times(1)).addEmp(vm);
     }
 
     @Test
     public void updateEmpSuccessTest() {
-        EmployeeVM vm = createEmployee();
+        EmployeeVM vm = createEmployeeVM();
         String empId = vm.getEmpId();
         service.updateEmp(empId,vm);
         verify(empDao,times(1)).updateEmp(empId,vm);
@@ -47,7 +48,7 @@ public class EmployeeServiceTest {
 
     @Test
     public void getEmpByEmpIdSuccessTest() {
-        EmployeeVM vm = createEmployee();
+        EmployeeVM vm = createEmployeeVM();
         String empId = "";
         service.getEmpByEmpId(empId);
         Mockito.when(empDao.getEmpByEmpId(empId)).thenReturn(vm);
@@ -62,7 +63,8 @@ public class EmployeeServiceTest {
 
     @Test
     public void getEmpListSuccessTest() {
-        Iterable<EmployeeVO> list = new ArrayList<>();
+        List<EmployeeVO> list = new ArrayList<>();
+        list.add(createEmployeeVO());
         List<EmployeeVM> employeeVMList = new ArrayList<>();
         for (EmployeeVO employeeVO : list) {
             EmployeeVM vm = new EmployeeVM();
@@ -73,10 +75,11 @@ public class EmployeeServiceTest {
             employeeVMList.add(vm);
         }
         Mockito.when(empDao.getEmpList()).thenReturn(employeeVMList);
-        service.getEmpList();
+        List<EmployeeVM> vms = service.getEmpList();
+        Assert.assertEquals(1, vms.size());
     }
 
-    public EmployeeVM createEmployee() {
+    public EmployeeVM createEmployeeVM() {
         EmployeeVM vm = new EmployeeVM();
         vm.setEmpId("1234");
         vm.setEmpName("Mat");
@@ -84,6 +87,18 @@ public class EmployeeServiceTest {
         vm.setDepartment("RND");
 
         return vm;
+    }
+
+    public EmployeeVO createEmployeeVO() {
+        EmployeeVO vo = new EmployeeVO();
+        vo.setFirstName("Ahmad");
+        vo.setLastName("Albab");
+        vo.setStaffId("1234");
+        vo.setAge(22);
+        vo.setGender("Male");
+        vo.setDepartment("RND");
+
+        return vo;
     }
 
 }
