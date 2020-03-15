@@ -44,4 +44,10 @@ public class EmployeeController {
         return ResponseEntity.ok(empList);
     }
 
+    @DeleteMapping(path = "/{empId}")
+    public ResponseEntity<Void> deleteEmpById(@PathVariable String empId) {
+        empService.delEmpByEmpId(empId);
+        return ResponseEntity.ok().build();
+    }
+
 }
