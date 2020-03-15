@@ -32,4 +32,6 @@ public class EmployeeService {
     public List<EmployeeVM> getEmpList() {
         return empDao.getEmpList();
     }
+
+    public void delEmpByEmpId(String empId) {empDao.delEmpbyEmpId(empId);}
 }

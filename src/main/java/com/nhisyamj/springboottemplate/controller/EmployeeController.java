@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/employee", consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/employee", produces = MediaType.APPLICATION_JSON_VALUE)
 public class EmployeeController {
 
     private final EmployeeService empService;
@@ -20,13 +20,13 @@ public class EmployeeController {
         this.empService = empService;
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EmployeeVM> addEmployee(@RequestBody EmployeeVM vm) {
         empService.addEmp(vm);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EmployeeVM> updateEmployee(@RequestParam("emp_id") String empId, @RequestBody EmployeeVM vm) {
         empService.updateEmp(empId, vm);
         return ResponseEntity.ok().build();
@@ -42,6 +42,12 @@ public class EmployeeController {
     public ResponseEntity<List<EmployeeVM>> getEmpList() {
         List<EmployeeVM> empList = empService.getEmpList();
         return ResponseEntity.ok(empList);
+    }
+
+    @DeleteMapping(path = "/{empId}")
+    public ResponseEntity<Void> deleteEmpById(@PathVariable String empId) {
+        empService.delEmpByEmpId(empId);
+        return ResponseEntity.ok().build();
     }
 
 }

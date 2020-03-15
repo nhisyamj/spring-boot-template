@@ -66,4 +66,10 @@ public class EmployeeDaoImpl {
         return employeeVMList;
     }
 
+    public void delEmpbyEmpId(String empId) {
+        EmployeeVO vo = dao.findByStaffId(empId);
+        Assert.notNull(vo,"EmpId not found");
+        dao.delete(vo);
+    }
+
 }
