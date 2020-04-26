@@ -13,14 +13,20 @@ This project act as initial template for spring boot app.
 
 ### Usage
 
+Start required services
+```
+$ docker-compose -f infra/sb-template/docker-compose.yml up -d
 ```
 
-# open cli
-# run required services
-$ cd infra/sb-template
-$ docker-compose up -d
+Run the application
 
-#run the application
+```
 $ mvn spring-boot:run
+```
 
+Scanning the code quality using SonarQube
+
+```
+$ mvn clean verify sonar:sonar /
+  -Dsonar.host.url=http://sonarserver:9000 # <optional> default http://localhost:9000
 ```
