@@ -16,6 +16,11 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<mysql.connector.version>8.0.23</mysql.connector.version>
+		<lombok.version>1.18.12</lombok.version>
+		<springfox.swagger.version>2.9.2</springfox.swagger.version>
+		<jacoco.version>0.8.5</jacoco.version>
+		<sonar.version>3.7.0.1746</sonar.version>
 	</properties>
 
 	<dependencies>
@@ -31,23 +36,23 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
-			<version>5.1.48</version>
+			<version>${mysql.connector.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.12</version>
+			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
-			<version>2.9.2</version>
+			<version>${springfox.swagger.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.9.2</version>
+			<version>${springfox.swagger.version}</version>
 		</dependency>
 
 		<dependency>
@@ -66,7 +71,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.5</version>
+				<version>${jacoco.version}</version>
 				<configuration>
 					<excludes>
 						<exclude>**/vo/*.*</exclude>
@@ -91,7 +96,7 @@
 			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
-				<version>3.7.0.1746</version>
+				<version>${sonar.version}</version>
 			</plugin>
 		</plugins>
 	</build>

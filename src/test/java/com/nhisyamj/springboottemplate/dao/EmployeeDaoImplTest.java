@@ -32,23 +32,28 @@ public class EmployeeDaoImplTest {
 
     @Test
     public void addEmpSuccessTest() {
+        EmployeeVM vm = createEmployeeVM();
+        Assert.assertNotNull(vm);
         Mockito.when(empDao.save(createEmployeeVO())).thenReturn(createEmployeeVO());
-        employeeDao.addEmp(createEmployeeVM());
+        employeeDao.addEmp(vm);
 //        verify(empDao,times(1)).save(createEmployeeVO());
     }
 
     @Test
     public void updateEmpSuccessTest() {
+        EmployeeVM vm = createEmployeeVM();
         Mockito.when(empDao.findByStaffId("")).thenReturn(createEmployeeVO());
         Mockito.when(empDao.save(createEmployeeVO())).thenReturn(createEmployeeVO());
-        employeeDao.updateEmp("",createEmployeeVM());
+        Assert.assertNotNull(vm);
+        employeeDao.updateEmp("",vm);
 //        verify(empDao,times(1)).save(createEmployeeVO());
     }
 
     @Test
     public void getEmpByEmpIdSuccessTest() {
         Mockito.when(empDao.findByStaffId("")).thenReturn(createEmployeeVO());
-        employeeDao.getEmpByEmpId("");
+        EmployeeVM vm = employeeDao.getEmpByEmpId("");
+        Assert.assertNotNull(vm);
     }
 
     @Test

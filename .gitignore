@@ -28,3 +28,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+## Custom files
+mysqldbconfig/
+mysqldbdata/
