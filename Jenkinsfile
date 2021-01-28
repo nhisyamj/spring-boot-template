@@ -4,8 +4,9 @@ pipeline {
     stage('build') {
       steps {
         sh 'mvn clean package'
-        jacoco()
-        withSonarQubeEnv 'sonarqubeDefault'
+        sh 'mvn clean verify sonar:sonar'
+//         jacoco()
+//         withSonarQubeEnv 'sonarqubeDefault'
       }
     }
 
