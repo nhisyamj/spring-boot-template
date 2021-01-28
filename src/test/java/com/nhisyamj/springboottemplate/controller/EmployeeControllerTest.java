@@ -3,42 +3,49 @@ package com.nhisyamj.springboottemplate.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhisyamj.springboottemplate.service.EmployeeService;
 import com.nhisyamj.springboottemplate.vm.EmployeeVM;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(EmployeeController.class)
+@RunWith(MockitoJUnitRunner.class)
 public class EmployeeControllerTest {
 
-    @MockBean
+    @InjectMocks
+    private EmployeeController controller;
+
+    @Mock
     private EmployeeService service;
 
-    @Autowired
     private MockMvc mockMvc;
+
+    @Before
+    public void setUp() {
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+    }
 
     @Test
     public void addEmployeeSuccessTest() throws Exception {
         EmployeeVM vm = createEmployee();
         ObjectMapper mapper = new ObjectMapper();
         String payload = mapper.writeValueAsString(vm);
-        Mockito.doCallRealMethod().when(service).addEmp(vm);
         final ResultActions result = mockMvc.perform(post("/employee")
                 .content(payload)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
         );
         result.andExpect(status().isOk());
-//        Mockito.verify(service).addEmp(vm);
+        verify(service).addEmp(any(EmployeeVM.class));
     }
 
     @Test

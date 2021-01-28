@@ -4,12 +4,12 @@ import com.nhisyamj.springboottemplate.dao.EmployeeDaoImpl;
 import com.nhisyamj.springboottemplate.vm.EmployeeVM;
 import com.nhisyamj.springboottemplate.vo.EmployeeVO;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 public class EmployeeServiceTest {
 
     @InjectMocks
@@ -26,15 +27,12 @@ public class EmployeeServiceTest {
     @Mock
     private EmployeeDaoImpl empDao;
 
-    @Before
-    public void init() {
-        MockitoAnnotations.initMocks(this);
-    }
-
     @Test
     public void addEmpSuccessTest() {
+
         EmployeeVM vm = createEmployeeVM();
         service.addEmp(vm);
+
         verify(empDao,times(1)).addEmp(vm);
     }
 
@@ -43,6 +41,7 @@ public class EmployeeServiceTest {
         EmployeeVM vm = createEmployeeVM();
         String empId = vm.getEmpId();
         service.updateEmp(empId,vm);
+
         verify(empDao,times(1)).updateEmp(empId,vm);
     }
 

@@ -3,20 +3,21 @@ package com.nhisyamj.springboottemplate.dao;
 import com.nhisyamj.springboottemplate.vm.EmployeeVM;
 import com.nhisyamj.springboottemplate.vo.EmployeeVO;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class EmployeeDaoImplTest {
 
     @InjectMocks
@@ -25,33 +26,27 @@ public class EmployeeDaoImplTest {
     @Mock
     private EmpDao empDao;
 
-    @Before
-    public void init() {
-        MockitoAnnotations.initMocks(this);
-    }
-
     @Test
     public void addEmpSuccessTest() {
         EmployeeVM vm = createEmployeeVM();
         Assert.assertNotNull(vm);
-        Mockito.when(empDao.save(createEmployeeVO())).thenReturn(createEmployeeVO());
         employeeDao.addEmp(vm);
-//        verify(empDao,times(1)).save(createEmployeeVO());
+        verify(empDao,times(1)).save(any(EmployeeVO.class));
     }
 
     @Test
     public void updateEmpSuccessTest() {
         EmployeeVM vm = createEmployeeVM();
-        Mockito.when(empDao.findByStaffId("")).thenReturn(createEmployeeVO());
-        Mockito.when(empDao.save(createEmployeeVO())).thenReturn(createEmployeeVO());
+        when(empDao.findByStaffId(anyString())).thenReturn(createEmployeeVO());
+        when(empDao.save(any(EmployeeVO.class))).thenReturn(createEmployeeVO());
         Assert.assertNotNull(vm);
-        employeeDao.updateEmp("",vm);
-//        verify(empDao,times(1)).save(createEmployeeVO());
+        employeeDao.updateEmp("abc123",vm);
+        verify(empDao,times(1)).save(any(EmployeeVO.class));
     }
 
     @Test
     public void getEmpByEmpIdSuccessTest() {
-        Mockito.when(empDao.findByStaffId("")).thenReturn(createEmployeeVO());
+        when(empDao.findByStaffId("")).thenReturn(createEmployeeVO());
         EmployeeVM vm = employeeDao.getEmpByEmpId("");
         Assert.assertNotNull(vm);
     }
@@ -61,8 +56,10 @@ public class EmployeeDaoImplTest {
         List<EmployeeVO> list = new ArrayList<>();
         list.add(createEmployeeVO());
 
-        Mockito.when(empDao.findAll()).thenReturn(list);
+        when(empDao.findAll()).thenReturn(list);
+
         List<EmployeeVM> vmList = employeeDao.getEmpList();
+
         assertEquals(1,vmList.size());
         verify(empDao,times(1)).findAll();
     }
